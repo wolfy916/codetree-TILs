@@ -1,8 +1,9 @@
 '''
 루프 탈출 - 코드트리 실버 2
-분류 : 유니온 파인드
+분류 : 구현, 시뮬레이션
 '''
 import sys
+from collections import deque as dq
 
 # [A] 입력함수 초기화
 def input():
@@ -14,18 +15,21 @@ if __name__ == "__main__":
     n = int(input())
     nums = [0] + [int(input()) for _ in range(n)]
 
-    # [2] 루프 체크 및 탐색
-    is_loop = [False] * (n + 1)
+    # [2] 인접 리스트 생성
+    adjL = [[] for _ in range(n + 1)]
     for i in range(1, n + 1):
-        if is_loop[i] or nums[i] < 1: continue
-        visited = [i]
-        while not is_loop[nums[i]] and nums[i] not in visited:
-            if nums[i] == 0: break
-            visited.append(nums[i])
-            i = nums[i]
-        else:
-            for j in visited:
-                is_loop[j] = True
+        adjL[nums[i]].append(i)
 
-    # [3] 출력
-    print(is_loop.count(False) - 1)
+    # [3] bfs
+    answer = 0
+    visited = [False] * (n + 1)
+    q = dq([0])
+    while q:
+        v = q.popleft()
+        for w in adjL[v]:
+            if visited[w]: continue
+            visited[w] = True
+            answer += 1
+            q.append(w)
+    
+    print(answer)

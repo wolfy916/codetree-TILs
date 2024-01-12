@@ -3,6 +3,8 @@
 분류 : 백트랙킹
 '''
 import sys
+from copy import deepcopy
+
 
 # [A] 입력함수 초기화
 def input():
@@ -10,54 +12,41 @@ def input():
 
 # [B] 백트랙킹 함수
 def dfs(idx):
-    global answer
+    global answer, possible
     if idx > N:
         answer += 1
         return
     
-    if students[idx] >= 0:
+    for v in range(3):
+        if not possible[idx][v]: continue
+        tmp = deepcopy(possible)
+        for k in range(3):
+                if v == k: continue
+                possible[idx][k] = False
+        for s in rules[idx][1]:
+            for k in range(3):
+                if v == k: continue
+                possible[s][k] = False
+        for d in rules[idx][0]:
+            possible[d][v] = False
         dfs(idx + 1)
-    else:
-        rules = []
-        for c, a, b in orders:
-            if a == idx:
-                rules.append((b, cnd[c]))
-            elif b == idx:
-                rules.append((a, cnd[c]))
-
-        for a in range(3):
-            if not possible[idx][a]: continue
-            students[idx] = a
-            for b, c in rules:
-                if c:
-                    for k in range(3):
-                        if a == k: continue
-                        possible[b][k] = False
-                else:
-                    possible[b][a] = False
-            dfs(idx + 1)
-            students[idx] = -1
-            for b, c in rules:
-                if c:
-                    for k in range(3):
-                        if a == k: continue
-                        possible[b][k] = True
-                else:
-                    possible[b][a] = True
+        possible = tmp
 
 # [Main]
 if __name__ == "__main__":
     N, K = map(int, input().split())
-    orders = []
+    cnd = {'S': 1, 'D': 0}
+    rules = [[[], []] for _ in range(N + 1)]
     for _ in range(K):
         c, a, b = input().split()
-        orders.append((c, int(a), int(b)))
-
+        a, b = int(a), int(b)
+        if a > b:
+            rules[b][cnd[c]].append(a)
+        else:
+            rules[a][cnd[c]].append(b)
+            
     possible = [[True] * 3 for _ in range(N + 1)]
-    students = [-1] * (N + 1)
-
     answer = 0
-    cnd = {'S': True, 'D': False}
     dfs(1)
 
     print(answer)

@@ -3,7 +3,6 @@
 분류 : 백트랙킹
 '''
 import sys
-from copy import deepcopy
 
 
 # [A] 입력함수 초기화

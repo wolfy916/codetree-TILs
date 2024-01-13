@@ -1,6 +1,6 @@
 '''
 거울에 레이저 쏘기 - 코드트리 실버1
-분류 : ?
+분류 : 2차원 탐색
 '''
 import sys
 
@@ -8,7 +8,7 @@ import sys
 def input():
     return sys.stdin.readline().rstrip('\n')
 
-# [B] 카운팅
+# [B] 레이저 반사횟수 카운팅
 def count(i, j, prev):
     global answer
     if visited[i][j]: return
@@ -25,9 +25,9 @@ def count(i, j, prev):
 
 # [Main]
 if __name__ == "__main__":
+    # [1] 데이터 입력 및 초기화
     N, M = map(int, input().split())
     board = [input() for _ in range(N)]
-
     kind = {'/': 0, '\\': 1}
     delta = ((-1, 0), (1, 0), (0, -1), (0, 1))
     link = {
@@ -36,9 +36,10 @@ if __name__ == "__main__":
         (1, 0): ((0, -1), (0, 1)),
         (-1, 0): ((0, 1), (0, -1))
     }
-
-    answer = 0
     visited = [[False] * M for _ in range(N)]
+    answer = 0
+
+    # [2] 2차원 배열의 가장자리에서 탐색 시작
     for i in range(N):
         if i < 1 or i >= N - 1:
             for j in range(M):

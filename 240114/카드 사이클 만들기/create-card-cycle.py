@@ -17,7 +17,6 @@ if __name__ == "__main__":
 
     # [2] 정렬 로직
     cnt, max_size = 0, -1
-    visited = [False] * N
     for i in range(N):
         if nums[i] == target[i]: continue
         size = 1

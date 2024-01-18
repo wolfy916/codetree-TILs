@@ -1,2 +1,3 @@
-a, b = map(float, input().split())
-print(round((a + b) / (a - b), 2))
+a, b = map(int, input().split())
+cal = (a + b) / (a - b)
+print(f"{cal:.2f}")

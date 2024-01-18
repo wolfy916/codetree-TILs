@@ -1,2 +1,2 @@
-a, b = map(int, input().split())
-print(round((a + b) / abs(a - b), 2))
+a, b = map(float, input().split())
+print(round((a + b) / (a - b), 2))

@@ -37,7 +37,6 @@ if __name__ == "__main__":
     delta = ((-1, 0), (1, 0), (0, -1), (0, 1))
     for i in range(1, 101):
         for j in range(1, 101):
-            if not board[i][j]: continue
             for di, dj in delta:
                 ni, nj = i + di, j + dj
                 if ni < 1 or nj < 1 or ni >= 101 or nj >= 101: continue

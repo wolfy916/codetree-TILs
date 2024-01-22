@@ -31,7 +31,7 @@ if __name__ == "__main__":
         board[i][j] = True
 
     # [3] 인접 블록이 몇개인지 카운트
-    cnt = [[0] * 101 for _ in range(101)]
+    cnt = [[4] * 101 for _ in range(101)]
     delta = ((-1, 0), (1, 0), (0, -1), (0, 1))
     for i in range(1, 101):
         for j in range(1, 101):
@@ -40,7 +40,7 @@ if __name__ == "__main__":
                 ni, nj = i + di, j + dj
                 if ni < 0 or nj < 0 or ni >= 101 or nj >= 101: continue
                 if not board[ni][nj]: continue
-                cnt[i][j] += 1
+                cnt[i][j] -= 1
 
     # [4] dfs 탐색
     visited = [[False] * 101 for _ in range(101)]

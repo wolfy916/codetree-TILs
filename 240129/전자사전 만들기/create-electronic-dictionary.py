@@ -22,7 +22,7 @@ if __name__ == "__main__":
     # [3] 사전 기록
     words.sort()
     for word in words:
-        for i in range(1, len(word)):
+        for i in range(1, len(word) + 1):
             if ref.get(word[:i]):
                 ref[word[:i]].append(idx[word])
             else:

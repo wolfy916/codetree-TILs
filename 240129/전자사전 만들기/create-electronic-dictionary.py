@@ -8,6 +8,24 @@ import sys
 def input():
     return sys.stdin.readline().rstrip('\n')
 
+# [B] 이분 탐색
+def binary_search(word, is_lower=True):
+    result = 0
+    left, right = 0, N - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if words[mid].startswith(word):
+            result = mid
+            if is_lower:
+                right = mid - 1
+            else:
+                left = mid + 1
+        elif words[mid] < word:
+            left = mid + 1
+        elif words[mid] > word:
+            right = mid - 1
+    return result
+
 # [Main]
 if __name__ == "__main__":
     # [1] 데이터 입력
@@ -17,21 +35,13 @@ if __name__ == "__main__":
 
     # [2] 데이터 초기화
     idx = {words[i]: i + 1 for i in range(N)}
-    ref = dict()
-
-    # [3] 사전 기록
     words.sort()
-    for word in words:
-        for i in range(1, len(word) + 1):
-            if ref.get(word[:i]):
-                ref[word[:i]].append(idx[word])
-            else:
-                ref[word[:i]] = [idx[word]]
-
+    
     # [4] 결과 출력
     for n, word in orders:
-        n = int(n)
-        if not ref.get(word) or len(ref[word]) < n:
-            print(-1)
+        start = binary_search(word, True)
+        end = binary_search(word, False)
+        if end - start + 1 >= int(n):
+            print(idx[words[start + int(n) - 1]])
         else:
-            print(ref[word][n - 1])
+            print(-1)

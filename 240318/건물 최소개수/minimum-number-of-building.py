@@ -6,23 +6,21 @@ def input():
 if __name__ == "__main__":
     n = int(input())
     coords = [tuple(map(int, input().split())) for _ in range(n)]
-    ref = dict()
+    stack = []
     answer = 0
 
     for x, y in coords:
-        keys = ref.keys()
-        if len(keys) > 0:
-            for key in sorted(keys, reverse=True):
-                if key > y:
-                    del ref[key]
-                    answer += 1
-                else:
-                    break
-            if not ref.get(y) and y > 0:
-                ref[y] = True
-        else:
-            ref[y] = True
+        while stack:
+            if stack[-1] < y:
+                stack.append(y)
+            elif stack[-1] > y:
+                stack.pop()
+                answer += 1
+            else:
+                break
+        if len(stack) < 1 and y > 0:
+            stack.append(y)
 
-    answer += len(ref.keys())
+    answer += len(stack)
 
     print(answer)

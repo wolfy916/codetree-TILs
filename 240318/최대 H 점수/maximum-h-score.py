@@ -16,7 +16,7 @@ if __name__ == "__main__":
     for num in range(maxV, 0, -1):
         counter[num - 1] += counter[num]
 
-    answer = 0
+    answer = 1
     for num in range(maxV, 0, -1):
         if num <= counter[num]:
             answer = num

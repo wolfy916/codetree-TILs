@@ -19,15 +19,17 @@ const solution = (input) => {
     return answer;
 
     function bfs(start) {
-        let cnt = 1;
+        let cnt = 0;
         let queue = [[start, 1]];
+        bombs.set(start, true);
         while (queue.length > 0) {
             let [v, dis] = queue.shift();
-            if (bombs.get(v) === false) {
-                bombs.set(v, true);
-                cnt += 1;
-                queue.push([v + dis, dis + 1]);
-                queue.push([v - dis, dis + 1]);
+            cnt += 1;
+            for (let i=v-dis; i<=v+dis; i++) {
+                if (bombs.get(i) === false) {
+                    queue.push([i, dis + 1]);
+                    bombs.set(i, true);
+                }
             }
         }
         return cnt;

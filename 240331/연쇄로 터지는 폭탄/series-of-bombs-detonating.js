@@ -10,7 +10,7 @@ const solution = (input) => {
 
     let answer = 0;
     for (let i=0; i<n; i++) {
-        answer = Math.max(answer, bfs(arr[i], 1));
+        answer = Math.max(answer, bfs(arr[i]));
         for (let i=0; i<n; i++) {
             bombs.set(arr[i], false);
         };
